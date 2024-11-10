@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+            display: flex;
+            max-width: 100%;
+            min-height: 480px;
+            width: 800px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .form-container {
+            flex: 1;
+            padding: 40px;
+        }
+        .overlay-container {
+            background: #764ba2;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+            flex: 1;
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        p {
+            margin-bottom: 30px;
+            font-size: 14px;
+            font-weight: 300;
+        }
+        input {
+            background-color: #eee;
+            border: none;
+            padding: 12px 15px;
+            margin: 8px 0;
+            width: 100%;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        input:focus {
+            transform: scale(1.02);
+            box-shadow: 0 0 10px rgba(118, 75, 162, 0.5);
+        }
+        button {
+            border-radius: 20px;
+            border: 1px solid #764ba2;
+            background-color: #764ba2;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 12px 45px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: transform 80ms ease-in;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        button:hover {
+            opacity: 0.9;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transition: all 0.5s ease;
+        }
+        button:hover::after {
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .overlay-container button {
+            background-color: transparent;
+            border-color: #ffffff;
+        }
+        a {
+            color: #333;
+            font-size: 14px;
+            text-decoration: none;
+            margin: 15px 0;
+            font-weight: 300;
+        }
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .form-container, .overlay-container {
+            animation: fadeIn 0.5s ease-out;
+        }
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column-reverse;
+            }
+            .form-container, .overlay-container {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <form id="registerForm" action="#" method="POST">
+                <h1>Create Account</h1>
+                <input type="text" id="firstname" placeholder="First Name" required>
+                <input type="text" id="lastname" placeholder="Last Name" required>
+                <input type="email" id="email" placeholder="Email" required>
+                <div id="emailcheck" class="error-message"></div>
+                <input type="password" id="password" placeholder="Password" required>
+                <div id="passcheck" class="error-message"></div>
+                <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+                <div id="confirmpasscheck" class="error-message"></div>
+                <div id="E&P" class="error-message"></div>
+                <button type="submit">Sign Up</button>
+            </form>
+            <a href="signin.html">Already have an account? Sign In</a>
+        </div>
+        <div class="overlay-container">
+            <h1>Welcome Back!</h1>
+            <p>To keep connected with us please login with your personal info</p>
+            <button onclick="location.href='signin.html'">Sign In</button>
+        </div>
+    </div>
+
+    <script>
+    // Register form handling
+    function handleRegister(event) {
+        event.preventDefault(); // Prevent form submission
+
+        let emailC = document.getElementById('emailcheck');
+        let passC = document.getElementById('passcheck');
+        let confirmPassC = document.getElementById('confirmpasscheck');
+        let epC = document.getElementById('E&P');
+
+        let fnameInput = document.getElementById('firstname');
+        let lnameInput = document.getElementById('lastname');
+        let emailInput = document.getElementById('email');
+        let passwordInput = document.getElementById('password');
+        let confirmPasswordInput = document.getElementById('confirmPassword');
+
+        // Reset error messages and styles
+        emailC.innerHTML = '';
+        passC.innerHTML = '';
+        confirmPassC.innerHTML = '';
+        epC.innerHTML = '';
+
+        fnameInput.style.border = '';
+        lnameInput.style.border = '';
+        emailInput.style.border = '';
+        passwordInput.style.border = '';
+        confirmPasswordInput.style.border = '';
+
+        let firstName = fnameInput.value.trim();
+        let lastName = lnameInput.value.trim();
+        let email = emailInput.value.trim();
+        let password = passwordInput.value.trim();
+        let confirmPassword = confirmPasswordInput.value.trim();
+
+        // Error handling logic
+        if (firstName === '' || lastName ==='' || email === '' || password === '' || confirmPassword === '') {
+            epC.innerHTML = 'All fields are required!';
+            epC.style.color = 'red';
+
+            if (firstName === '') fnameInput.style.border = '2px solid red';
+            if (lastName === '') lnameInput.style.border = '2px solid red';
+            if (email === '') emailInput.style.border = '2px solid red';
+            if (password === '') passwordInput.style.border = '2px solid red';
+            if (confirmPassword === '') confirmPasswordInput.style.border = '2px solid red';
+            return;
+        }
+
+        const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        if (!emailPattern.test(email)) {
+            emailC.innerHTML = 'Invalid email address!';
+            emailC.style.color = 'red';
+            emailInput.style.border = '2px solid red';
+            return;
+        }
+
+        if (password.length < 8) {
+            passC.innerHTML = 'Password must be at least 8 characters long!<br>';
+            passC.style.color = 'red';
+            passwordInput.style.border = '2px solid red';
+            return;
+        }
+
+        if (!/\d/.test(password)) {
+            passC.innerHTML += 'Password must contain at least one number!<br>';
+            passC.style.color = 'red';
+            passwordInput.style.border = '2px solid red';
+            return;
+        }
+        
+        if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+            passC.innerHTML += 'Password must contain at least one special character!<br>';
+            passC.style.color = 'red';
+            passwordInput.style.border = '2px solid red';
+            return;
+        }
+
+        if (!/[A-Z]/.test(password)) {
+            passC.innerHTML += 'Password must contain at least one uppercase letter!<br>';
+            passC.style.color = 'red';
+            passwordInput.style.border = '2px solid red';
+            return;
+        }
+
+        if (!/[a-z]/.test(password)) {
+            passC.innerHTML += 'Password must contain at least one lowercase letter!<br>';
+            passC.style.color = 'red';
+            passwordInput.style.border = '2px solid red';
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            confirmPassC.innerHTML = 'Passwords do not match!';
+            confirmPassC.style.color = 'red';
+            confirmPasswordInput.style.border = '2px solid red';
+            return;
+        }
+
+        // Store data in localStorage for login form
+        localStorage.setItem('registeredEmail', email);
+        localStorage.setItem('registeredPassword', password);
+
+        alert('Registration successful! You can now log in.');
+        fnameInput.style.border = '2px solid green';
+        lnameInput.style.border = '2px solid green';
+        emailInput.style.border = '2px solid green';
+        passwordInput.style.border = '2px solid green';
+        confirmPasswordInput.style.border = '2px solid green';
+    }
+
+    // Attach event listeners for the register form
+    document.getElementById('registerForm').addEventListener('submit', handleRegister);
+
+    document.getElementById('email').addEventListener('input', function() {
+        document.getElementById('emailcheck').innerHTML = '';
+        this.style.border = '';
+    });
+
+    document.getElementById('password').addEventListener('input', function() {
+        document.getElementById('passcheck').innerHTML = '';
+        this.style.border = '';
+    });
+
+    document.getElementById('confirmPassword').addEventListener('input', function() {
+        document.getElementById('confirmpasscheck').innerHTML = '';
+        this.style.border = '';
+    });
+    </script>
+</body>
+</html>
